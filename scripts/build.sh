@@ -72,7 +72,7 @@ PY
 
     if [[ "$TARGET" == "jetson-native" ]]; then
         set +u
-        source "/opt/ros/${ROS_DISTRO:-humble}/setup.bash"
+        source "/opt/ros/${ROS_DISTRO:-jazzy}/setup.bash"
         set -u
         ROS2_IDL="$PKG/rbnx-build/codegen/ros2_idl"
         bash "$PKG/scripts/build_ros2_overlay.sh" "$ROS2_IDL"
@@ -126,7 +126,7 @@ case "$TARGET" in
             # for its metadata as that uid.
             docker run --rm --entrypoint bash --user "$(id -u):$(id -g)" -e HOME=/tmp \
                 -v "$PKG":/mapping "$IMG" -lc \
-                "source /opt/ros/\${ROS_DISTRO:-humble}/setup.bash && \
+                "source /opt/ros/\${ROS_DISTRO:-jazzy}/setup.bash && \
                  bash /mapping/scripts/build_ros2_overlay.sh \
                    /mapping/rbnx-build/codegen/ros2_idl"
         else

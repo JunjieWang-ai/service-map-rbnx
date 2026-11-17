@@ -22,7 +22,7 @@ ALGO="${MAPPING_ALGO:-rtabmap}"
 RESOLVED="/tmp/${ALGO}_resolved.yaml"
 ENGINE_PID_FILE="${MAPPING_ENGINE_PID_FILE:-/tmp/mapping_engine_pid}"
 
-source /opt/ros/humble/setup.bash
+source /opt/ros/${ROS_DISTRO:-jazzy}/setup.bash
 
 read_y() {
     # Never fail under `set -e`: grep returns 1 on no match, which
