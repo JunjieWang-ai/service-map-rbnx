@@ -9,7 +9,7 @@
 #   x86-docker     x86_64 + docker, ROS2 in image (docker/Dockerfile)   [default]
 #   jetson-docker  arm64 Jetson + docker, L4T base (docker/Dockerfile.jetson)
 #   jetson-native  arm64 Jetson + host ROS2 — no docker; ensure
-#                  ros-humble-rtabmap-ros is apt-installed on the host.
+#                  ros-jazzy-rtabmap-ros is apt-installed on the host.
 #
 # RBNX_BUILD_CLEAN=1     nuke rbnx-build/ and rebuild without docker cache.
 # RBNX_BUILD_VARIANT=fastlio2_full  (x86-docker only) heavy FASTLIO2 image.
@@ -25,8 +25,8 @@ CLEAN="${RBNX_BUILD_CLEAN:-}"
 VARIANT="${RBNX_BUILD_VARIANT:-light}"
 IMG="${ROBONIX_MAPPING_IMAGE:-robonix-mapping}"
 TARGET="${RBNX_BUILD_TARGET:-x86-docker}"
-ROS_BASE_IMAGE="${ROBONIX_MAPPING_ROS_BASE_IMAGE:-robonix-ros:humble-ros-base}"
-UPSTREAM_ROS_BASE_IMAGE="ros:humble-ros-base"
+ROS_BASE_IMAGE="${ROBONIX_MAPPING_ROS_BASE_IMAGE:-robonix-ros:jazzy-ros-base}"
+UPSTREAM_ROS_BASE_IMAGE="ros:jazzy-ros-base"
 JETSON_ROS_BASE_IMAGE="${ROBONIX_MAPPING_JETSON_ROS_BASE_IMAGE:-dustynv/ros:humble-ros-base-l4t-r36.4.0}"
 PYBIN="${MAPPING_NATIVE_PYTHON:-python3}"
 
@@ -142,17 +142,17 @@ case "$TARGET" in
         echo "[build] native target — verifying host ROS2 + rtabmap"
         missing=0
         if ! command -v ros2 >/dev/null 2>&1; then
-            echo "[build] ERROR: ros2 not on PATH — source /opt/ros/humble/setup.bash" >&2
+            echo "[build] ERROR: ros2 not on PATH — source /opt/ros/jazzy/setup.bash" >&2
             missing=1
         fi
         if ! ros2 pkg prefix rtabmap_slam >/dev/null 2>&1; then
             echo "[build] ERROR: rtabmap not installed. On the Jetson host run:" >&2
-            echo "[build]   sudo apt install ros-humble-rtabmap-ros" >&2
+            echo "[build]   sudo apt install ros-jazzy-rtabmap-ros" >&2
             missing=1
         fi
         if ! ros2 pkg prefix imu_filter_madgwick >/dev/null 2>&1; then
             echo "[build] ERROR: imu_filter_madgwick not installed. On the Jetson host run:" >&2
-            echo "[build]   sudo apt install ros-humble-imu-filter-madgwick" >&2
+            echo "[build]   sudo apt install ros-jazzy-imu-filter-madgwick" >&2
             missing=1
         fi
         [[ "$missing" == "1" ]] && exit 1

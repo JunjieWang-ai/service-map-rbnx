@@ -202,7 +202,7 @@ in `scripts/build.sh` — the rest of the package is unchanged.
 
 The generated ROS 2 overlay intentionally builds only Robonix's custom `map`
 interface package. Standard interfaces such as `sensor_msgs` continue to come
-from the target's ROS 2 Humble installation, preserving its support libraries
+from the target's ROS 2 installation, preserving its support libraries
 and CMake exports for consumers such as `cv_bridge`.
 
 ## Maps, modes and session state

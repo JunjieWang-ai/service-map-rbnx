@@ -101,7 +101,11 @@ class CycloneDDSRuntimeTests(unittest.TestCase):
 
     def test_default_image_installs_cyclonedds_rmw(self) -> None:
         dockerfile = (ROOT / "docker" / "Dockerfile").read_text(encoding="utf-8")
-        self.assertIn("ros-humble-rmw-cyclonedds-cpp", dockerfile)
+        self.assertIn("ros-jazzy-rmw-cyclonedds-cpp", dockerfile)
+
+    def test_default_image_installs_zenoh_rmw(self) -> None:
+        dockerfile = (ROOT / "docker" / "Dockerfile").read_text(encoding="utf-8")
+        self.assertIn("ros-jazzy-rmw-zenoh-cpp", dockerfile)
 
     def test_start_wrapper_forwards_cyclonedds_uri(self) -> None:
         start = (ROOT / "scripts" / "start.sh").read_text(encoding="utf-8")

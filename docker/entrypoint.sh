@@ -13,7 +13,7 @@
 
 set -eo pipefail
 
-source /opt/ros/humble/setup.bash
+source /opt/ros/${ROS_DISTRO:-jazzy}/setup.bash
 if [[ -f /mapping/rbnx-build/codegen/ros2_idl/install/setup.bash ]]; then
     source /mapping/rbnx-build/codegen/ros2_idl/install/setup.bash
 fi
@@ -32,7 +32,7 @@ configure_zenoh_session() {
     if [ "${RMW_IMPLEMENTATION:-}" != "rmw_zenoh_cpp" ] || [ -z "${ROBONIX_ZENOH_ROUTER:-}" ]; then
         return 0
     fi
-    local src="/opt/ros/${ROS_DISTRO:-humble}/share/rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_SESSION_CONFIG.json5"
+    local src="/opt/ros/${ROS_DISTRO:-jazzy}/share/rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_SESSION_CONFIG.json5"
     local dst="/tmp/robonix_zenoh_session.json5"
     if [ ! -f "$src" ]; then
         echo "[entrypoint] missing Zenoh session config: $src" >&2

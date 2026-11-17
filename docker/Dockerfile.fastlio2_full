@@ -7,7 +7,7 @@
 #   runtime        — full SLAM + bridge
 
 # ── Build stage: FASTLIO2_ROS2 C++ ──────────────────────────────────────────
-ARG ROS_BASE_IMAGE=robonix-ros:humble-ros-base
+ARG ROS_BASE_IMAGE=robonix-ros:jazzy-ros-base
 FROM ${ROS_BASE_IMAGE} AS builder
 
 # ── TUNA mirrors for domestic (CN) networks ─────────────────────────────
@@ -37,11 +37,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cmake git \
     libeigen3-dev libpcl-dev \
     libyaml-cpp-dev \
-    ros-humble-pcl-ros ros-humble-pcl-conversions \
-    ros-humble-tf2 ros-humble-tf2-ros ros-humble-tf2-geometry-msgs \
-    ros-humble-rmw-cyclonedds-cpp \
-    ros-humble-message-filters \
-    ros-humble-visualization-msgs \
+    ros-jazzy-pcl-ros ros-jazzy-pcl-conversions \
+    ros-jazzy-tf2 ros-jazzy-tf2-ros ros-jazzy-tf2-geometry-msgs \
+    ros-jazzy-rmw-cyclonedds-cpp \
+    ros-jazzy-message-filters \
+    ros-jazzy-visualization-msgs \
     python3-pip python3-colcon-common-extensions \
     && rm -rf /var/lib/apt/lists/*
 
@@ -87,7 +87,7 @@ COPY third_party/FASTLIO2_ROS2/localizer /ws/src/localizer
 COPY third_party/FASTLIO2_ROS2/hba      /ws/src/hba
 
 # Build all packages (livox needs -DROS_EDITION=ROS2 -DHUMBLE_ROS=humble)
-RUN . /opt/ros/humble/setup.sh && \
+RUN . /opt/ros/${ROS_DISTRO:-jazzy}/setup.sh && \
     colcon build --event-handlers console_direct+ \
     --cmake-args -DCMAKE_BUILD_TYPE=Release -DROS_EDITION=ROS2 -DHUMBLE_ROS=humble
 
@@ -118,11 +118,11 @@ CMD ["python3", "-m", "mapping_rbnx.atlas_bridge"]
 FROM runtime-bridge AS runtime
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpcl-io1.12 libyaml-cpp0.7 \
-    ros-humble-pcl-ros \
-    ros-humble-tf2-ros ros-humble-rmw-cyclonedds-cpp \
-    ros-humble-message-filters ros-humble-visualization-msgs \
-    ros-humble-pointcloud-to-laserscan \
+    libpcl-io1.14 libyaml-cpp0.8 \
+    ros-jazzy-pcl-ros \
+    ros-jazzy-tf2-ros ros-jazzy-rmw-cyclonedds-cpp \
+    ros-jazzy-message-filters ros-jazzy-visualization-msgs \
+    ros-jazzy-pointcloud-to-laserscan \
     libboost-serialization1.74.0 libboost-filesystem1.74.0 libtbb12 \
     && rm -rf /var/lib/apt/lists/*
 
